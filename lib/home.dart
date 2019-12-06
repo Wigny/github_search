@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:github_search/bloc/search_bloc.dart';
 import 'package:github_search/models/search_item.dart';
 import 'package:github_search/models/search_resut.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -77,11 +78,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _listTile({SearchItem item}) {
-    return ListTile(
-      title: Text(item.fullName),
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(item.avatarUrl),
+    return InkWell(
+      onTap: () => _launchURL(item.url),
+      child: ListTile(
+        title: Text(item.fullName),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(item.avatarUrl),
+        ),
       ),
     );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

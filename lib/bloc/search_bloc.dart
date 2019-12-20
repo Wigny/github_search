@@ -15,7 +15,9 @@ class SearchBloc {
     apiResultFlux = searchFlux
         .distinct()
         .where((i) => i.length > 2)
-        .debounce((_) => TimerStream(true, const Duration(milliseconds: 500)))
+        .debounce(
+          (_) => TimerStream(true, const Duration(milliseconds: 500)),
+        )
         .asyncMap(_service.search)
         .switchMap((i) => Observable.just(i));
   }

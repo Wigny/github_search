@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _searchBloc = new SearchBloc();
+    _searchBloc = SearchBloc();
     super.initState();
   }
 
